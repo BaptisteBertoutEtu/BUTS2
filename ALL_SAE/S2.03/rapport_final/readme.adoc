@@ -1,0 +1,36 @@
+= Compilation en Html et PDF
+
+====
+
+Tout d'abord, pour que la compilation fonctionne il vous faut installer asciiDoctor pour la compilation en html et asciiDoctor-pdf pour la compilation en PDF. +
+Pour ce faire : +
+
+* Tout d'abord vous devez verifier que ruby est installé : +
+** Ouvrez un terminal
+** Utilisez la commandes suivantes : `ruby -v`
+** Soit vous allez voir la version de ruby, soit une erreur va apparraitre. Si c'est la cas, à vous d'installer ruby. +
+
+NOTE: Vous pouvez retrouver ruby sur https://rubyinstaller.org/[cette page]
+
+* Une fois ruby est installé
+** utilisez la commande `gem install asciidoctor-pdf`
+
+*Voila, tout est prêt pour utiliser asciidoctor*
+====
+
+
+== Compilation en Html
+****
+Pour compiler votre fichier asciidoc en html, il vous faut utiliser la commande :
+****
+```bash
+asciidoctor <nomDuFichier>.adoc
+```
+
+== Compilation en PDF
+****
+Pour compiler votre fichier asciidoc en PDF, il vous faut utiliser la commande :
+****
+```bash
+asciidoctor-pdf <nomDuFichier>.adoc
+```

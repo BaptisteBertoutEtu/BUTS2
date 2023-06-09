@@ -1,0 +1,459 @@
+= SAé 2.04 – Partie analyse de données
+:author: Baptiste Bertout et Killian Lawson
+:toc: left
+:toclevels: 3
+:icons: font
+:experimental:
+:toc-title: Table des matières
+
+== Question 1 :
+
+.Déterminer les 20 athlètes affichant le plus de participations aux J.O :
+****
+Pour savoir les 20 athlètes affichant le plus de participations aux J.O, nous avons effectuer la requête suivantes : +
+
+```sql
+SELECT name
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+GROUP BY name
+ORDER BY COUNT(DISTINCT (name,year)) DESC
+LIMIT 20;
+```
+
+Nous avons trouver le resultat suivant : +
+
+.Les 20 athlètes affichant le plus de participations
+[#img1,caption="Figure 1: "]
+image::images/question1.PNG[Caractéristique 1,350,250]
+****
+
+== Question 2 :
+
+=== Question A :
+
+.Remplir le tableau statistique
+****
+
+Pour cette question nous avions l'année 1992 et nous avons choisi de prendre 'Summer' comme type de jeu. +
+
+Pour voir le tableau rempli, il faut visualiser le pdf qui s'appelle *tableau_question2_a.pdf* +
+
+Pour remplir ce tableau, nous avons utilisé les requêtes suivantes : +
+
+.Requête pour la colonne 'pays'
+```sql
+SELECT DISTINCT region
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno) JOIN regions r USING(noc)
+WHERE year=1992 AND season='Summer';
+```
+
+---
+
+.Requête pour la colonne 'Moyenne d'âge'
+```sql
+SELECT ROUND(AVG(CAST(age AS integer)),2)
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno) JOIN regions r USING(noc)
+WHERE year=1992 AND season='Summer' AND age <> 'NA'
+GROUP BY region;
+```
+
+---
+
+.Requête pour la colonne 'Nb sportifs'
+```sql
+SELECT count(DISTINCT name)
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno) JOIN regions r USING(noc)
+WHERE year=1992 AND season='Summer'
+GROUP BY region;
+```
+
+---
+
+.Requête pour la colonne 'Min âge'
+```sql
+SELECT min(CAST(age AS integer))
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno) JOIN regions r USING(noc)
+WHERE year=1992 AND season='Summer' AND age <> 'NA'
+GROUP BY region;
+```
+
+---
+
+.Requête pour la colonne 'Max âge'
+```sql
+SELECT max(CAST(age AS integer))
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno) JOIN regions r USING(noc)
+WHERE year=1992 AND season='Summer' AND age <> 'NA'
+GROUP BY region;
+```
+
+En ce qui concerne les graphiques sur cette question, ils se trouvent dans le dossier `pdf > pdf_question2_a`
+
+****
+
+=== Question B :
+
+.Comparer l’âge moyen des médaillés et l’âge moyen des participants
+****
+Pour l'âge moyen nous pouvons faire de deux manière : +
+
+====
+* La première est de passé par une requête SQL pour avoir lâge moyen des participants et l'âge moyen des médaillés directement. Pour cela nous utilisons les requêtes suivantes : +
+
+.Requêtes pour l'âge moyen des participants
+```sql
+SELECT ROUND(AVG(CAST(age AS integer)),2)
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+WHERE year=1992 AND season='Summer' AND age <> 'NA';
+```
+
+.Requête pour l'âge moyen des médaillés
+```sql
+SELECT ROUND(AVG(CAST(age AS integer)),2)
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+WHERE year=1992 AND season='Summer' AND age <> 'NA' AND medal<>'NA';
+```
+====
+====
+* Pour la seconde nous pouvons passer par les calculs. Nous passons par une requête pour obtenir la liste des âges des différents particpants et médaillés, et ensuite nous passons par le calcul d'une moyenne mathématique avec la formule : +
+
+.Formules mathématiques pour le calcul de la moyenne
+[#img2,caption="Figure 2: "]
+image::images/formule_math.PNG[formule,350,250]
+
+Pour ce faire on utilise les requêtes suivantes : 
+
+.Requêtes pour la liste de l'âge des participants
+```sql
+SELECT age
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+WHERE year=1992 AND season='Summer' AND age <> 'NA';
+```
+
+.Requête pour la liste de l'âge des médaillés
+```sql
+SELECT age
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+WHERE year=1992 AND season='Summer' AND age <> 'NA' AND medal<>'NA';
+```
+
+Ensuite on utilise la formule ce qui nous donne : +
+-> Age moyen des participants : (24+26+20+...+25+20+20)/12934 = 24.4 +
+
+-> Age moyen des médaillés : (26+29+45+...+24+27+27)/1712 = 24.69
+====
+
+Ainsi, nous avons la comparaison suivante : +
+
+.Comparaison des âges entre les participants et les médaillés
+[#img3,caption="Figure 3: "]
+image::images/graphique_comparaison_age.PNG[formule,350,250]
+
+****
+
+=== Question C :
+
+.Comparer le poids moyen des médaillé(e)s et le poids moyen des participant(e)s
+****
+Pour le poids moyen nous pouvons faire de deux manière : +
+
+====
+* La première est de passé par une requête SQL pour avoir le poids moyen des participant(e)s et le poids moyen des médaillé(e)s directement. Pour cela nous utilisons les requêtes suivantes : +
+
+.Requêtes pour le poids moyen des participants
+```sql
+SELECT AVG(CAST(weight AS numeric))
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+WHERE year=1992 and season='Summer' AND sex='M' AND weight<>'NA';
+```
+
+.Requêtes pour le poids moyen des participantes
+```sql
+SELECT AVG(CAST(weight AS numeric))
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+WHERE year=1992 AND season='Summer' AND sex='F' AND weight<>'NA';
+```
+
+.Requête pour le poids moyen des médaillés
+```sql
+SELECT AVG(CAST(weight AS numeric))
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+WHERE year=1992 AND season='Summer' AND sex='M' AND medal<>'NA' AND weight<>'NA';
+```
+
+.Requête pour le poids moyen des médaillées
+```sql
+SELECT AVG(CAST(weight AS numeric))
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+WHERE year=1992 AND season='Summer' AND sex='F' AND medal<>'NA' AND weight<>'NA';
+```
+====
+====
+* Pour la seconde nous pouvons passer par les calculs. Nous passons par une requête pour obtenir la liste des poids des différents particpant(e)s et médaillé(e)s, et ensuite nous passons par le calcul d'une moyenne mathématique avec la formule : +
+
+.Formules mathématiques pour le calcul de la moyenne
+[#img4,caption="Figure 4: "]
+image::images/formule_math.PNG[formule,350,250]
+
+Pour ce faire on utilise les requêtes suivantes : 
+
+.Requêtes pour la liste de poids des participants
+```sql
+SELECT weight
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+WHERE year=1992 AND season='Summer' AND sex='M' AND weight<>'NA' AND medal<>'NA';
+```
+
+.Requêtes pour la liste de poids des participantes
+```sql
+SELECT weight
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+WHERE year=1992 AND season='Summer' AND sex='F' AND weight<>'NA';
+```
+
+.Requête pour la liste de poids des médaillés
+```sql
+SELECT weight
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+WHERE year=1992 AND season='Summer' AND sex='M' AND weight<>'NA' AND medal<>'NA';
+```
+
+.Requête pour la liste de poids des médaillées
+```sql
+SELECT weight
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno)
+WHERE year=1992 AND season='Summer' AND sex='F' AND weight<>'NA' AND medal<>'NA';
+```
+
+Ensuite on utilise la formule ce qui nous donne : +
+-> Poids moyen des participants : (80+107+64+...+78+80+80)/7258 = 76.24 +
+
+-> Poids moyen des participantes : (64+45+52+...+64+58+58)/3215 = 59.64 +
+
+-> Poids moyen des médaillés : (92+50+89+...+83+90+90)/1020= 80.31 +
+
+-> Poids moyen des médaillées : (81+68+68+...+68+68+63)/509 = 63.43
+====
+
+Ainsi, nous avons la comparaison suivante : +
+
+.Comparaison des âges entre les participants et les médaillés
+[#img5,caption="Figure 5: "]
+image::images/graphique_comparaison_poids.PNG[formule,350,250]
+
+****
+
+== Question 3 :
+
+=== Question A :
+
+.Faire la liste des 15 pays qui ont gagné le plus de médailles (1992 à 2016)
+****
+Pour avoir ce résultat nous utilisons la requête suivante. Nous ne spécifions pas les années dans la requête puisque tous les athlètes présents dans la base donnée sont enregistrés entre les années 1992 et 2016.
+
+.Requête des 15 pays qui ont gagné le plus de médailles
+```sql
+SELECT region,count(medal)
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno) join regions r USING(noc)
+WHERE medal<>'NA'
+GROUP BY region
+ORDER BY count(medal) DESC
+LIMIT 15;
+```
+****
+
+=== Question B :
+
+
+
+
+
+
+==== Question I : 
+
+.Choisir 5 pays parmi ces 15 et représenter l’évolution du nombre de participants
+****
+Pour étudier le nombre de participants par année et par pays, nous avons effectué la requête suivante : +
+
+.Requêtes pour le nombre de participants par pays et par année
+```sql
+SELECT count(*)
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno) JOIN regions r USING(noc)
+WHERE region='nom_du_pays'
+GROUP BY year
+ORDER BY year;
+```
+
+NOTE: Nous devons remplacer 'nom_du_pays' par le nom du pays que l'on souhaite. Dans notre cas les 5 pays sont : USA, Russia, Germany, Italy, France.
+
+Suite à cela nous avons le graphique suivant, avec en abscisse les années et en ordonnée le nombre de participants. +
+
+.Nombre de participants par pays et par année
+[#img6,caption="Figure 6: "]
+image::images/graphique_participant.PNG[formule,450,300]
+****
+
+
+
+
+
+
+==== Question II : 
+
+.Choisir 5 pays parmi ces 15 et représenter l’évolution du nombre de médaillés
+****
+Pour étudier le nombre de médaillés par année et par pays, nous avons effectué la requête suivante : +
+
+.Requêtes pour le nombre de médaillés par pays et par année
+```sql
+SELECT count(*)
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno) JOIN regions r USING(noc)
+WHERE region='nom_du_pays' AND medal<>'NA'
+GROUP BY year
+ORDER BY year;
+```
+
+NOTE: Comme précédemment, il faut remplacer nom_du_pays.
+
+Suite à cela nous avons le graphique suivant, avec en abscisse les années et en ordonnée le nombre de médaillés. +
+
+.Nombre de participants par pays et par année
+[#img7,caption="Figure 7: "]
+image::images/graphique_medaille.PNG[formule,450,300]
+****
+
+
+
+
+
+==== Question III : 
+
+.Choisir 5 pays parmi ces 15 et représenter l’évolution du nombre de femmes participantes
+****
+Pour étudier le nombre de femmes participantes par année et par pays, nous avons effectué la requête suivante : +
+
+.Requêtes pour le nombre de femmes participantes par pays et par année
+```sql
+select count(*)
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno) join regions r USING(noc)
+where region='nom_du_pays' and sex='F'
+group by year
+order by year;
+```
+
+NOTE: Comme précédemment, il faut remplacer nom_du_pays.
+
+Suite à cela nous avons le graphique suivant, avec en abscisse les années et en ordonnée le nombre de femmes participantes. +
+
+.Nombre de participants par pays et par année
+[#img8,caption="Figure 8: "]
+image::images/graphique_femme.PNG[formule,450,300]
+****
+
+
+
+
+
+
+==== Question IV : 
+
+.Choisir 5 pays parmi ces 15 et représenter l’évolution de la proportion de femmes participantes
+****
+Pour étudier la proportion de femmes participantes par année et par pays, nous devons effectué un calcul de proportion avec le nombre de participants et le nombre de femme participantes. +
+
+Suite à cela nous obtenons le graphique suivant, avec en abscisse les années et en ordonnée la proportion de femmes participantes. +
+
+.Nombre de participants par pays et par année
+[#img9,caption="Figure 9: "]
+image::images/graphique_proportion_femme.PNG[formule,450,300]
+
+Nous pouvons également calculer le pourcentage d'évolution de cette proportion entre les années.
+
+Nous pouvons calculer cela grâce à la formule ci-dessus : +
+
+.Avec p = proportion, e = effectif du caractère recharché et N = effectif total
+[#img10,caption=""]
+image::images/formule_proportion.PNG[formule,450,300]
+
+Suite aux calculs de l'évolution des proportions des femmes participantes, nous obtenons le graphique suivant : +
+
+.Graphique représentant l'évolution de la proportion des femmes participantes (en %)
+[#img11,caption="Figure 10: "]
+image::images/graphique_evolution_proportion.PNG[formule,450,300]
+
+Pour ce faire nous avons utilisé la formule suivante : +
+
+.Avec % = pourcentage cherché, Vf = valeur finale et Vi = valeur initiale
+[#img12,caption=""]
+image::images/formule_evolution.PNG[formule,450,300]
+
+Par valeur d'arrivée, nous entendons valeur de l'année que l'on cherche. Et par valeur de départ, nous entendons valeur de l'année dernière. +
+Par exemple, pour les USA (ou tout autre pays), pour le premier calcul : +
+--
+* Va = 1993
+* Vb = 1992
+--
+****
+
+
+
+
+
+
+==== Question V : 
+
+.Choisir 5 pays parmi ces 15 et représenter la proportion de médaillées parmi les femmes
+****
+Pour étudier la proportion de médaillées parmi les femmes par année et par pays, nous devons effectué un calcul de proportion avec le nombre de femme participantes et le nombre de femme médaillées. Pour savoir le nombre de femme médaillées, il faut utiliser la requêtes suivante : +
+
+.Requêtes pour le nombre de femmes médaillées par pays et par année
+```sql
+select count(*)
+FROM equipe e JOIN athlete a USING(eno) JOIN participe p USING(ano) JOIN competition c USING(cno) join regions r USING(noc)
+where region='USA' and sex='F' and medal <> 'NA'
+group by year
+order by year;
+```
+
+Suite à cela nous obtenons le graphique suivant, avec en abscisse les années et en ordonnée le nombre de femmes médaillées. +
+
+.Nombre de femme médaillées par pays et par année
+[#img13,caption="Figure 12: "]
+image::images/graphique_nombre_de_femme.PNG[formule,450,300]
+
+Maintenant nous devons calculer la proportion de femme médaillées par rapport au nombre de femmes participantes. Nous utilisons donc la formule vue au dessus et nous obtenons le graphique ci-dessous : +
+
+.Proportion des médaillées parmi les femmes. 
+[#img14,caption="Figure 13: "]
+image::images/graphique_proportion_medaillee.PNG[formule,450,300]
+
+Suite aux calculs de l'évolution des proportions des femmes médaillées, que nous avons effectué grâce à la formule utilisée à la question IV, nous obtenons le graphique suivant : +
+
+.Graphique représentant l'évolution de la proportion des médaillées parmi les femmes (en %)
+[#img15,caption="Figure 14: "]
+image::images/graphique_evolution_medaillee.PNG[formule,450,300]
+****
+
+
+
+
+==== Question VI : 
+
+.Choisir 5 pays parmi ces 15 et représenter la proportion de femme médaillées parmi les médaillés
+****
+Pour étudier la proportion de femmes médaillées par année et par pays, nous devons calculer la proportion de femme médaillées par rapport au nombre de médaillés. Nous utilisons donc la formule vue au dessus et nous obtenons le graphique ci-dessous : +
+
+.Proportion des femmes médaillées parmis les médaillés
+[#img16,caption="Figure 15: "]
+image::images/graphique_proportion_femme_medaillee.PNG[formule,450,300]
+
+Suite aux calculs de l'évolution des proportions des femmes médaillées, que nous avons effectué grâce à la formule utilisée à la question IV, nous obtenons le graphique suivant : +
+
+.Graphique représentant l'évolution de la proportion des femmes médaillées (en %)
+[#img17,caption="Figure 16: "]
+image::images/graphique_evolution_femme_medaillee.PNG[formule,450,300]
+****
+
+++++
+<link rel="stylesheet" type="text/css" href="../override.css">
+++++

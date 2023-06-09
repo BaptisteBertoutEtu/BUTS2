@@ -1,0 +1,319 @@
+= Rapport n°2
+Bertout Baptiste <author>; Degey Romain <author>; Lawson Killian <author>
+:toc-title: Table des matières
+:toc: left
+:toclevels: 5
+:icons: font
+:experimental:
+
+==  Semaine 09 : Installation Debian automatisée par préconfiguration
+
+=== I. À propos de la distribution Debian
+
+==== Questions 1 
+
+****
+.Qu’est-ce que le Projet Debian ?
+--
+
+Le projet Debian est un groupe mondial de volontaires qui s'efforcent de produire un système d'exploitation qui soit composé exclusivement de logiciels libres. Le principal produit de ce projet est la distribution Debian GNU/Linux, qui inclut le noyau Linux ainsi que des milliers d'applications pré-empaquetées.
+--
+
+.D’où vient le nom Debian ?
+--
+Le nom Debian tire son origine des prénoms du créateur de Debian, Ian Murdock, et de son épouse, Debra.
+--
+
+NOTE: Source : https://www.debian.org/doc/manuals/project-history/project-history.fr.pdf[*Debian.org*]
+****
+
+==== Questions 2 
+ 
+.Il existe 3 durées de prise en charge (support) de ces versions et quelles sont les durées de ces prises en charge ?
+****
+
+ 
+.la durée minimale
+--
+La date de fin de prise en charge pour la version stable est la date de publication de la version stable suivante plus un an. Par exemple, Debian Bullseye (« Buster +1 ») a été publiée le 14 août 2021, donc la fin de prise en charge de Debian Buster est en août 2022.
+--
+ 
+.la durée en support long terme (LTS) 
+--
+Debian Long Term Support (LTS), pour prise en charge à long terme, est un projet pour étendre la durée de vie de toutes les versions stables de Debian à (au moins) 5 ans. Debian LTS n'est pas gérée par l'équipe chargée de la sécurité de Debian, mais par un groupe distinct de bénévoles et sociétés intéressées pour en faire un succès. Ainsi, l'équipe Debian LTS prendra en charge les mises à jour de sécurité des différentes versions une fois que l'équipe en charge de la sécurité aura terminé son travail. 
+--
+ 
+.la durée en support long terme étendue (ELTS)
+--
+La prise en charge à long terme étendue (ELTS) est une offre commerciale offrant un prolongement de la durée de vie de 10 ans des versions de Debian (c'est-à-dire de 5 ans après la prise en charge de 5 ans offerte par le projet LTS). Il ne s'agit pas d'un projet officiel de Debian. L'infrastructure de Debian, et les autres ressources de Debian ne sont pas impliquées. 
+--
+
+Source : https://www.debian.org/releases/[*Debian.org*] et son https://wiki.debian.org/fr/LTS[*wikipédia*]
+****
+
+==== Questions 3 
+ 
+.Pendant combien de temps les mises à jour de sécurité seront-elles fournies ?
+****
+
+L'équipe Debian LTS prend en charge les mises à jour de sécurité des différentes versions une fois que l'équipe chargée de la sécurité aura terminé son travail. 
+Autrement dit, les mises à jour de sécurité seront fournies durant toute la durée du LTS.
+
+Source : https://wiki.debian.org/fr/LTS[*Wikipédia de Débian*]
+****
+
+==== Questions 4 
+ 
+.Combien de versions au minimum sont activement maintenues par Debian ? Donnez leur nom générique (= les types de distribution).
+****
+
+Il reste deux versions activement maintenues par Debian sont  : +
+- Debian 11 (“Bullseye”) +
+- Debian 10 (“Buster”)
+
+Source : https://www.debian.org/releases/index.fr.html#:~:text=Actuellement%2C%20la%20distribution%20stable%20de,publiée%20le%2017%20décembre%202022[*Debian.org*]
+****
+
+==== Questions 5 
+ 
+.Chaque distribution majeure possède un nom de code différent. D’où viennent les noms de code données aux distributions ?
+****
+Jusqu'ici les noms de code proviennent des personnages des films « Toy Story » par Pixar. 
+
+Source : https://www.debian.org/doc/manuals/project-history/project-history.fr.pdf[*Debian.org*]
+****
+
+==== Questions 6 
+ 
+.L’un des atouts de Debian fut le nombre d’architecture (≈ processeurs) officiellement prises en charge. Combien et lesquelles sont prises en charge par la version Bullseye ?
+****
+Debian GNU/Linux 11 fonctionne sur 9 architectures principales et sur de nombreuses variantes de celles-ci, appelées « saveurs ». +
+
+.On compte parmis ces saveurs :
+--
+- amd64 +
+- i386 +
+- armel +
+- armhf +
+- arm64 +
+- mips64el +
+- mipsel +
+- ppc64el +
+- s390x
+--
+
+Source : https://www.debian.org/releases/stable/armel/ch02s01.fr.html[*Debian.org*]
+****
+
+==== Questions 7 
+ 
+.Première version avec un nom de code
+****
+.Quel a été le premier nom de code utilisé ?
+--
+Le tout premier nom de code utilisé fut Buzz (le cosmonaute Buzz l’éclair)
+
+--
+
+.Quand a-t-il été annoncé ?
+--
+Cette première version est sortie en juin 1996
+--
+
+.Quel était le numéro de version de cette distribution ?
+--
+Le numéro de version était Debian 1.1
+--
+
+Source : https://www.debian.org/doc/manuals/project-history/project-history.fr.pdf[*Debian.org*] -> page 9 ligne 23 : “Debian 1.1 Buzz”
+****
+
+==== Questions 8 
+ 
+.Dernier nom de code attribué
+****
+.Quel est le dernier nom de code annoncé à ce jour ?
+--
+Forky
+--
+
+.Quand a-t-il été annoncé ?
+--
+Il a été annoncé le 13 Octobre 2022
+--
+
+.Quelle est la version de cette distribution ?
+--
+Debian 14
+--
+****
+
+=== II. Installation préconfigurée
+
+==== Première étape
+
+.Création de la machine virtuelle
+****
+Pour cette première étape, nous avons recréé une machine virtuelle de la même manière que dans le premier rapport que l'on peut retrouver link:file:///file:///C:/Users/bapti/Documents/cours/BUT_s2/S2.03/rapport_semaine_06/Rapport.html#_ii_rapport_technique[*ici*]
+****
+
+==== Deuxième étape
+
+.Téléchargement de l'archive
+****
+Pour cette deuxième étape nous avons télécharger l'archive autoinstall.zip. +
+Cette archive comprant les fichiers suivants: +
+--
+.isolinux-isolinux.cfg
+.isolinux-txt-fr.cfg
+.preseed-fr.cfg
+.S203-Debian11.viso
+.vboxpostinstall.sh
+--
+
+Pour finir cette étape nous avons décompressé dans le dossier de la machine virtuelle.
+****
+
+==== Troisième étape
+
+.Modification du fichier .viso et insertion
+****
+Une fois la décompression effectuée, nous avons  modifié la chaine `@@UUID@@` 
+par un identifiant unique universel via la ligne de commande :  +
+
+[source,ruby]
+----
+sed -i -E "s/(--iprt-iso-maker-file-marker-bourne-sh).*$/\1=$(cat /proc/sys/kernel/random/uuid)/" S203-Debian11.viso
+----
+
+.Modification du fichier .viso
+[#img-modification,caption="Figure 26: "]
+image::../Captures/26.png[Modification du fichier .iso,650,450]
+
+***
+
+Puis nous insérons ce fichier dans l'emplacement cdrom comme le montre link:file:///C:/Users/bapti/Documents/cours/BUT_s2/S2.03/rapport_semaine_06/Rapport.html#_2_installation_de_los[*cette partie*]
+
+.Insertion du fichier .viso
+[#img-insertion,caption="Figure 27: "]
+image::../Captures/27.png[Insertion du fichier .iso,650,450]
+****
+
+==== Quatrième étape
+
+.Démarrage de la machine
+****
+Nous avons démarré la machine et nous avons attendu que l'installation se termine et que la machine se reboot.
+Après avoir vérifié si cela avait fonctionné, le changement de taille ne s'est malheureusement pas appliqué. +
+****
+
+==== Cinquième étape
+
+.Droit sudo
+****
+Pour faire une installation avec plus d’options nous modifions le fichier `preseed-fr.cfg` avant l’ajout du .viso.
+
+Pour donner le droit sudo à l’utilisateur, il faut l’ajouter par défaut dans le groupe sudo, nous avons donc modifier cette ligne : +
+`d-i passwd/user-default-groups string audio cdrom video` +
+par : +
+`d-i passwd/user-default-groups string audio cdrom video sudo`
+
+.Droit sudo
+[#img-droit_sudo,caption="Figure 28: "]
+image::../Captures/29.png[Donner les droits sudo,650,450]
+****
+
+==== Sixième étape
+
+.Installation de l'environnement MATE
+****
+Pour avoir un aspect graphique, il faut modifier les lignes dans le fichier preseed-fr.cfg :
+
+--
+* `tasksel tasksel/first multiselect standard ssh-server `
+--
+
+.On ajoute l'environnement #MATE# par cette ligne : 
+--
+* `tasksel tasksel/first multiselect standard ssh-server mate-desktop`
+--
+
+.Ajout de l'environnement MATE
+[#img-environnement_mate,caption="Figure 29: "]
+image::../Captures/30.png[Ajouter l'environnement MATE,650,450]
+
+Nous avons tourver dans la documentation un passage qui nous a permi de comprendre ce que nous pouvions faire : +
+
+.Documentation
+--
+.Modification du fichier .viso
+[#img-documentation,caption="Figure 30: "]
+image::../Captures/28.png[Documentation,650,450]
+
+Source : link:https://www.debian.org/releases/stable/i386/apbs04.en.html[*debian.org*] section : B.4.10. Package selection
+--
+****
+
+==== Septième étape
+.Installation des paquets
+****
+Pour l'installation des paquets, nous utilisons la commande de la forme suivante :
+--
+* `d-i pkgsel/include string <paquet>`
+--
+
+Pour installer les paquets que nous voulons : 
+--
+* `d-i pkgsel/include string sudo git sqlite3 curl bash-completion neofetch`
+--
+
+.Installation des paquets
+[#img-installation_paquets,caption="Figure 31: "]
+image::../Captures/30_bis.png[Installation des paquets,650,450]
+
+--
+If you want to install some individual packages in addition to packages installed by tasks, you can use the parameter pkgsel/include. The value of this parameter can be a list of packages separated by either commas or spaces, which allows it to be used easily on the kernel command line as well. 
+
+Source : link:https://www.debian.org/releases/stable/i386/apbs04.en.html[*debian.org*] section : B.4.10. Package selection
+--
+****
+
+==== Dernière étape
+
+.Vérification
+****
+Pour vérifier les ajouts par l’installation automatique après la modification précédente nous faisons `groups user` afin de voir si `user` est bien dans sudo, nous constatons aussi une interface graphique debian.
+
+.Vérification
+[#img-verification,caption="Figure 32: "]
+image::../Captures/31.png[Vérification de la modification,650,450]
+****
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

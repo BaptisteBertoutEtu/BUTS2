@@ -1,0 +1,295 @@
+= SAÉ 2.03: Semaine 07 : Balisage léger
+Jean Carle <jean.carle@univ-lille.fr>
+v1, {localdate}
+:description: Semaine 1
+:doctype: article
+:encoding: utf-8
+:lang: fr
+ifdef::lang[include::attributes-{lang}.adoc[]]
+:imagedir: img/
+:stylesdir: ../bordel/css
+:source-highlighter: rouge
+:experimental:
+:icons: font
+:data-uri:
+:toc: left
+:sectnums:
+:chapter-signifier: Étape
+:chapter-refsig: {chapter-signifier}
+:example-caption: Question(s)
+ifdef::backend-pdf[]
+:pdf-themesdir: themes
+:pdf-theme: sae203_2023
+:pdf-fontsdir: fonts,GEM_FONTS_DIR
+:pdf-page-margin: [15mm, 12mm]
+endif::[]
+
+[abstract]
+.Résumé
+Cette section se résume à vous donner quelques liens *à suivre* pour vous former à l'utilisation de `Markdown` et de son exportation vers d'autres formats avec l'outils `Pandoc` (docx, pdf, html…) pour sa publication, et de `Asciidoc` et de l'outil de conversion `Asciidoctor`.
+
+Il existe de nombreux formats à balisage léger : https://en.wikipedia.org/wiki/Lightweight_markup_language[]. Nous nous focaliserons sur `Markdown` (et le convertisseur `Pandoc` qui étend aussi la syntaxe Markdown), et sur `Asciidoc` et ses convertisseurs, html (`asciidoctor`) et pdf (`asciidoctor-pdf`).
+
+<<<
+
+== Votre travail
+
+Votre travail de la semaine consiste en :
+
+. Étudier l'un au choix de ces langages de balisage léger (Markdown/Pandoc ou Asciidoc/Asciidoctor) en suivant les informations données dans les sections qui vont suivre . 
+. Écrire votre premier rapport, avec tout ce qui vous a été demandé la semaine passée. En autre chose :
+** Rédiger les questions (et réponses) de vocabulaire et de culture informatique
+** Rédiger le rapport technique sur vos actions réalisées la semaine passée : Qu'avez-vous fait ? Comment l'avez-vous fait ? Quelles difficultés avez-vous eu et comment les avez-vous résolues ?
+
+.Vous essaierez autant que possible
+Sur la forme::
+** de structurer votre rapport, 
+** d'utiliser les différents aspect du formatage : listes (numérotées et non numérotées), images (avec ou sans légende pour expliquer vos propos), ajout de bloc (avertissement, citation, code source…), de liens,
+** de lui ajouter une table des matières (générée automatiquement).
+
+Sur le fond:: Vous n'oublierez pas de justifier vos affirmations avec des références appropriées / pertinentes.
+
+.Vous déposerez votre rapport par équipe sur Moodle sous forme d'*une archive* contenant :
+- Une version html
+- Une version pdf
+- Les fichiers sources nécessaire à la conversion
+- Un fichier `readme.md` (ou `readme.adoc`) contenant les lignes de commandes permettant les conversions.
+
+[big]#Voici maintenant quelques informations sur les deux formats#
+
+<<<
+
+== Les outils d'édition
+
+Quelque soit votre choix de format, un simple éditeur de texte est suffisant.
+
+.Les conversions se feront au moyen des outils 
+* pandoc (pour Markdown)
+* asciidoctor & asciidoctor-pdf (pour Asciidoc). 
+
+Un simple terminal et la bonne commande en ligne de commande seront suffisant pour créer vos rapports.
+
+Donc si votre éditeur de texte favori sait coloriser, avec ou sans extensions additionnelles, les fichiers en `Markdown` ou `Asciidoc`, alors c'est le bon éditeur pour vous.
+
+=== Pour Markdown
+
+.Éditeurs en ligne 
+* https://stackedit.io/
+* https://dillinger.io/
+* Les principaux service de gestion de projets (github, gitlab) possèdent un éditeur Markdown simplifié
+
+.Éditeurs classiques
+((Emacs))::
+* https://jblevins.org/projects/markdown-mode/[Markdown-mode], 
+* http://joostkremers.github.io/pandoc-mode/[pandoc-mode]
+
+((vi))/((vim))/((neovim)):: 
+* https://github.com/vim-pandoc/vim-pandoc[vim-pandoc], 
+* https://jdhao.github.io/2019/01/15/markdown_edit_preview_nvim/, 
+* https://vimawesome.com/?q=markdown
+
+https://vscodium.com/#why[((vscodium))] (vscode sans télémétrie)::
+* Markdown est intégré : https://code.visualstudio.com/docs/languages/markdown[] 
+* Extensions utiles : Microsoft refusant l'utilisation de son magasin d'extensions, vscodium a mis le sien en place : le https://open-vsx.org/[MarketPlace de VSCodium] ne contient que des extensions libres, ce qui permet de pouvoir le recommander plus sereinement.
+** Syntaxe étendue : https://github.com/yzhang-gh/vscode-markdown#readme[Markdown all in one]
+** https://github.com/DavidAnson/vscode-markdownlint[Markdown lint] 
+** Visualisation améliorée : https://github.com/shd101wyy/vscode-markdown-preview-enhanced#readme[Markdown Preview Enhanced]
+** Profitez en pour installer l'extension https://valentjn.github.io/ltex/[LT~E~X] : LTeX n'est pas automatiquement configuré pour le français, ainsi, `LTeX`; Modiez-le : kbd:[Ctrl+,] `ltex`, chercher la section `Ltex: Language`, choisir `fr`. Éventuellement, faites de même avec `Ltex: Mother Tongue`
+
+// <<<
+
+=== Pour Asciidoc
+
+Tout est dit ici : https://docs.asciidoctor.org/asciidoctor/latest/tooling/ 
+
+.Éditeurs en ligne
+* https://asciidoclive.com[AsciidocLive] Attention, le texte proposé par défaut possède des titre en format Markdown ! Mais si vous avez bien suivi, vous savez que Asciidoctor est https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/#markdown-compatibility[compatible avec cette écriture]
+* Les principaux service de gestion de projets (github, https://docs.gitlab.com/ee/user/asciidoc.html[gitlab]) possèdent aussi un éditeur Asciidoc. Il suffit d'utiliser l'extension `.adoc`.
+
+.Éditeur spécifique
+* https://www.asciidocfx.com/[AsciidocFX] (assez complet, mais lourd)
+
+.Éditeurs classiques
+* https://github.com/asciidoctor/brackets-asciidoc-preview[bracket], https://marketplace.eclipse.org/content/asciidoctor-editor[Eclipse], https://intellij-asciidoc-plugin.ahus1.de/[IntelliJ], …
+* Emacs : https://github.com/bbatsov/adoc-mode[adoc-mode]
+* vi/vim/neovim : 
+** https://github.com/vim/vim/blob/master/runtime/syntax/asciidoc.vim, 
+** https://vimawesome.com/?q=asciidoc
+* https://vscodium.com/#why[((vscodium))] (vscode sans télémétrie) : ajouter l'extension https://github.com/asciidoctor/asciidoctor-vscode[asciidoctor-vscode]
+
+.Navigateurs web 
+Il existe des plugins de visualisation pour navigateurs web (Firefox, Chrome, Edge): https://docs.asciidoctor.org/asciidoctor/latest/tooling/#web-browser-add-ons-preview-only[web browser plugins].
+
+[NOTE]
+.Mais rappelez-vous 
+Avec votre éditeur de texte simple, vous pouvez aussi utiliser la ligne de commande. Cela fait très bien l'affaire.
+
+Ceci dit, il est également possible d'utiliser https://www.docker.com/[Docker] ou https://podman.io/[podman] : https://github.com/asciidoctor/docker-asciidoctor Son utilisation est documenté : C'est comme la ligne de commande classique, mais en appelant le conteneur d'abord (en lui fournissant les chemins virtuelles à utiliser ainsi la ligne de commande à exécuter)
+
+<<<
+
+== ((Markdown))
+
+=== Origine
+
+https://daringfireball.net/projects/markdown/[Markdown] a été créé par https://daringfireball.net/[Jhon Gruber] et https://fr.wikipedia.org/wiki/Aaron_Swartz[Aaron Schwartz] (http://www.aaronsw.com/) en 2004. 
+
+Il s'agit d'un format texte à balisage léger permettant de simplifier l'écriture html (d'où son nom). Il est inspiré du format d'écriture des emails (qui est actuellement mal supporté par les messageries et souvent remplacé par le format html pourtant bien plus lourd).
+
+Le projet d'origine est composé d'une https://daringfireball.net/projects/markdown/syntax.text[description du format], d'https://daringfireball.net/projects/downloads/Markdown_1.0.1.zip[un script perl]. Jhon Gruber y a ajouté un https://daringfireball.net/projects/markdown/dingus[éditeur en ligne].
+
+Le site du projet est lui-même écrit en Markdown. Pour voir le code source, vous pouvez ajouter `.text` au bout des urls du site. 
+
+NOTE: L'extension standard des fichiers Markdown est maintenant `.md`. 
+
+Le format Markdown d'origine n'est pas correctement spécifié et contient des ambiguïtés jamais résolues par John Gruber (voir https://spec.commonmark.org/0.30/#why-is-a-spec-needed-[Why is a spec needed] et https://www.markdownguide.org/hacks/[hack]). De ce fait, de nombreuses versionsfootnote:[List non exhaustives : https://github.com/commonmark/commonmark-spec/wiki/markdown-flavors] sont apparus permettant d'étendre les possibilités initiales.
+
+.Exemples d’améliorations bienvenues :
+* écrire des tableaux (et gérer l'alignement des contenus dans les cellules), 
+* insérer des images (et gérer leur taille d'affichage sans devoir transformer l'image en amont et sans devoir écrire de code html), 
+* inclure des notes de bas de page (et plus généralement, du référencement croisé), 
+* écrire de formules mathématiques
+* ajouter des métadonnées
+* … 
+
+.Parmi ces extensions, on peut citer 
+* l'outils `((pandoc))` : https://pandoc.org/MANUAL.html#pandocs-markdown[Pandoc's Markdown] (pensez à déplier la section dans le menu de droite)
+* PHP Markdown Extra : https://michelf.ca/projects/php-markdown/extra/
+* le service github : https://docs.github.com/fr/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax[Github syntax]
+* le service gitlab : https://docs.gitlab.com/ee/user/markdown.html
+* le groupe CommonMark : https://commonmark.org[] (base pour les versions github et gitlab)
+* https://rmarkdown.rstudio.com/articles_intro.html[R-markdown], https://fletcherpenney.net/multimarkdown/features/[Multi-Markdown] …
+
+Vous pourrez trouver de nombreux comparatifs, dont celui-ci https://gist.github.com/vimtaai/99f8c89e7d3d02a362117284684baa0f, assez complet bien que pas à jour (notamment sur `Pandoc` comme l'indique les commentaires en dessous du tableau).
+
+====
+[NOTE%unbreakable]
+--
+Pour votre saé, nous nous focaliseront sur la version Pandoc, qui compte parmi les plus complètes, et permet l'écriture de document grâce à ses capacités de conversion tout à fait remarquable avec https://pandoc.org/MANUAL.html#templates[gestion de modèles] pour une personnalisation adaptable, ajout automatique d'une https://pandoc.org/MANUAL.html#option--toc[table des matières], prise en compte de metadonnées au format https://pandoc.org/MANUAL.html#extension-yaml_metadata_block[YAML] pour simplifier la personnalisation….
+--
+====
+
+=== Normalisation
+
+En 2012, le groupe CommonMark s'est donné pour objectif de normaliser ce format : https://spec.commonmark.org/0.30/[]
+
+Depuis, Commonmark est devenu la version de référence. De plus, markdown possède son  type média : https://www.rfc-editor.org/info/rfc7763, https://www.rfc-editor.org/info/rfc7764
+
+=== Apprendre Markdown
+
+.Tutoriels interactifs (que vous devriez faire)
+* Celui de CommonMark : https://commonmark.org/help et sa version francisée par https://www.arthurperret.fr[A. Perret] : https://www.arthurperret.fr/tutomd/
+* https://www.markdowntutorial.com/fr/
+
+Ces tutoriels ne sont pas complets, il faut donc …
+
+.… lire des pages web 
+Sur Markdown directement::
+ Celle de l'outils `((pandoc))` : https://pandoc.org/MANUAL.html#pandocs-markdown[Pandoc's Markdown] (pensez à déplier la section dans le menu de droite)
+* Celle du service github : https://docs.github.com/fr/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax[Github syntax]
+* Celle du groupe CommonMark : https://commonmark.org[]
+* Wikipedia : https://fr.wikipedia.org/wiki/Markdown
+
+* https://fr.markdown.net.br/syntaxe-etendue/ : Tutoriel pour les tables ,note de bas de page, et pleins d'autres syntaxes étendu (et reconnue par pandoc)
+
+* https://programminghistorian.org/fr/lecons/debuter-avec-markdown : Leçon suffisamment complète pour vous donner les bonnes clés d'utilisation de Markdown.
+* Un autre guide : https://www.markdownguide.org/ (avec des informations sur le markdown https://www.markdownguide.org/basic-syntax/[classique], mais aussi https://www.markdownguide.org/extended-syntax/[étendue]), intéressants mais on y trouve aussi quelques mauvais conseils (notamment concernant l'intégration de codage html dans le fichier markdown à ne réaliser qu'en dernier recours)
+
+Sur l'interaction Markdown/Pandoc::
+* le site officiel et sa documentation très bien faite : https://pandoc.org/
+* https://programminghistorian.org/en/lessons/sustainable-authorship-in-plain-text-using-pandoc-and-markdown
+* https://www.arthurperret.fr/cours/pandoc.html
+* Un tutoriel markdown / pandoc : https://gitlab.huma-num.fr/ecrinum/manuels/tutoriel-markdown-pandoc
+* Un cours plus ancien mais toujours valide : https://www.jdbonjour.ch/cours/markdown-pandoc/
+
+=== Astuces Markdown/Pandoc
+
+****
+[TIP]
+.1. Comment modifier de la taille d'une image ?
+--
+Réponse classique::: Beaucoup de version de Markdown ne permettent pas de changer la taille d'une image et vous propose comme solution d'utiliser des balises html dans le fichier Markdwon. Bien que souvent faisable, c'est une mauvaise solution puisque ce n'est alors plus du balisage léger (mélange des genres) et rend le document source moins lisible.
+
+Réponse avec Pandoc::: https://pandoc.org/MANUAL.html#images, https://pandoc.org/MANUAL.html#extension-link_attributes
+--
+
+[TIP]
+.2. Ajouter des métadonnées
+--
+Les métadonnées sont des informations ajouté au document principal (soit dans un fichier séparé, soit directement dans le fichier principal). Ces informations peuvent être juste informatives (auteurs, titre, mots clés…), mais peuvent aussi permettre de paramétrer le résultat d'une conversion.
+
+Metadonnées pandoc:: https://pandoc.org/MANUAL.html#metadata-blocks. Vous êtes particulièrement concerné par les deux premières sections Markdown et yaml vous concerne. Pour les conversions pdf/epub : https://pandoc.org/MANUAL.html#epub-metadata
+Exemple avec `pandoc`:: https://gitlab.huma-num.fr/ecrinum/manuels/tutoriel-markdown-pandoc/-/blob/master/parcours/04_edition.md
+
+Autres:: Les liens données plus haut sur l'interaction Pandoc ⇔ Markdown
+--
+
+[TIP]
+.3. Modèles pour conversion html avec Pandoc
+--
+* https://github.com/ryangrose/easy-pandoc-templates
+* https://vimalkvn.com/pandoc-markdown-to-html/
+--
+****
+
+// https://www.nextinpact.com/article/44926/visual-studio-code-editeur-credible-pour-publication-et-markdown[]
+
+// <<<
+
+== ((Asciidoc))
+
+=== Origine
+
+`https://asciidoc.org/[Asciidoc]` est un format similaire à Markdown, plus ancien que Markdown dans sa version python (asciidoc, 2002), plus jeune dans sa version Ruby (asciidoctor, 2013), il est aussi plus riche en fonctionnalités. 
+
+L'extension classique des noms de fichier est `.adoc`
+
+.Comparatif Asciidoc / Markdown : Pour voir les différences, rien de mieux que d'avoir des exemples sous les yeux
+* https://docs.asciidoctor.org/asciidoc/latest/asciidoc-vs-markdown/, 
+* https://asciidoc.org/#compare
+
+
+=== Apprendre Asciidoc
+
+* `Asciidoc` est le format, tandis que `((Asciidoctor))` est le _convertisseur_ à utiliser pour convertir le format Asciidoc en html. 
+
+* `((Asciidoctor-pdf))` est le convertisseur à utiliser pour obtenir le document final en pdf.
+
+Le convertisseur `Asciidoctor` permet aussi une certaine compatibilité avec la syntaxe Markdown : https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/#markdown-compatibility
+
+.Suivez les instructions d'installation des outils de conversion
+* Installer le convertisseur adoc => html : https://docs.asciidoctor.org/asciidoctor/latest/[Asciidoctor]
+* Installer le convertisseur adoc => pdf : https://docs.asciidoctor.org/pdf-converter/latest/[asciidoctor-pdf]
+
+Si vous avez docker/podman : vous pouvez utiliser le conteneur suivant https://github.com/asciidoctor/docker-asciidoctor (exemple sur la page). Mais je ne vous le conseil pas pour débuter.
+
+.La documentation est très claire et accessible
+* Racine de la documentation (format, outils, …) : https://docs.asciidoctor.org/
+* Le format Asciidoc à avoir toujours sous la main : https://docs.asciidoctor.org/asciidoc/latest/
+* *Suivez ce premier tutoriel* : https://docs.asciidoctor.org/asciidoctor/latest/get-started/
+* *Le second guide à suivre* : https://asciidoctor.org/docs/asciidoc-writers-guide/
+
+Ce document est lui-même écrit en Asciidoc, les sources de ce document sont un exemple assez complet. Vous pouvez le retrouver ici : https://gitlab.univ-lille.fr/jean.carle/sae-203 (connexion avec votre compte obligatoire) ou en archive sur Moodle.
+
+=== Quelques astuces pour Asciidoc
+
+. Une fois les outils installés sur votre machine (https://docs.asciidoctor.org/asciidoctor/latest/install/[asciidoctor], https://docs.asciidoctor.org/pdf-converter/latest/install/[asciidoctor-pdf]), vous pourrez commencer à écrire ET convertir vos documents.
+
+. La conversion : 
+** html : Suivez ce tutoriel : https://docs.asciidoctor.org/asciidoctor/latest/get-started/
+** pdf : la commande est expliquée ici : https://docs.asciidoctor.org/pdf-converter/latest/convert-to-pdf/
+** Automatiser : 
+*** vscodium : les commandes sont accessibles via la palette de commande (kbd:[ctrl, maj, P]) puis écrivez `asciidoc` et vous aurez la liste des commandes disponibles (il faut bien entendu avoir installé l'extension asciidoc)
+*** Vous pouvez aussi utiliser un `makefile` : Sur la section Asciidoc de cette page d'un enseignant de BTS, vous trouverez un `makefile` très simple qui peut vous aider à compiler vos documents : http://tvaira.free.fr/projets/activites/format-documentation/format-documentation.html#_asciidoctor 
+** Copier le contenu dans un fichier «_makefile_» à mettre à la racine de votre projet
+** L'appel à 
+
+Sous le titre de vos fichiers, vous trouverez les lignes d'informations sur le document (auteur, date…), puis une série de variable (entouré par kbd:[:])
+
+// // Ajout index
+// ifdef::backend-pdf[]
+// <<<
+
+// [index]
+// == Index
+// endif::[]

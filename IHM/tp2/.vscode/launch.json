@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Tp2",
+            "request": "launch",
+            "mainClass": "tp2.Tp2",
+            "projectName": "tp2"
+        },
+        {
+            "type": "java",
+            "name": "IHM",
+            "request": "launch",
+            "mainClass": "IHM",
+            "projectName": "IHM_8fdf7c60"
+        },
+        {
+            "type": "java",
+            "name": "Run IHM",
+            "request": "launch",
+            "mainClass": "IHM",
+            "vmArgs": "--module-path C:/Users/bapti/Documents/cours/BUT_s2/IHM/lib/javafx-sdk-20.0.1 --add-modules=javafx.controls,javafx.fxml"
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "java.project.referencedLibraries": [
+        "C:/Users/bapti/Documents/cours/BUT_s2/IHM/lib/javafx-sdk-20.0.1/lib/*.jar"
+    ],
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.outputPath": "bin",
+    "java.debug.settings.console": "internalConsole"
+}

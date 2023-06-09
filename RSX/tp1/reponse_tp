@@ -1,0 +1,15 @@
+3.1 : PC1 et PC2
+3.2 : simulées
+3.3 : Your First GNS3 Topology
+
+5 : show ip
+6 : ip 192.168.42.1
+7 : /24
+8 : ip 192.168.42.2
+9.2 : pas de connexion entre les deux machines
+9.3 : rajouter des cables
+
+11.1 : affiche les liens entre les tables
+12 : ping 192.168.42.2 -c 1
+14 : 12
+15 : 

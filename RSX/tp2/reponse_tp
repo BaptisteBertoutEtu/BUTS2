@@ -1,0 +1,11 @@
+tp 2
+
+exercice 1.a
+    1.  configurer une interface reseau
+    2.  ifconfig lo
+    3.  127.0.0.1
+    4.1.    2
+    4.2.    ifconfig -a
+    4.3.    
+    5.  ifconfig ens3
+    6.  
